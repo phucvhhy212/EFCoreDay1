@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
-namespace Domain;
+namespace Infrastructure;
 
 public class DbContext : Microsoft.EntityFrameworkCore.DbContext
 {

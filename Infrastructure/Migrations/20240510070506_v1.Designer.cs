@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using DbContext = Infrastructure.DbContext;
 
 #nullable disable
 
 namespace Domain.Migrations
 {
     [DbContext(typeof(DbContext))]
-    [Migration("20240510071439_v2_enable_project_employees")]
-    partial class v2_enable_project_employees
+    [Migration("20240510070506_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,22 +44,22 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("09f8fc6f-3c2d-4875-bcf7-6eef1a8b27e4"),
+                            Id = new Guid("f6d8e996-945c-45b7-b6b8-186ef7b08bbc"),
                             Name = "Software Development"
                         },
                         new
                         {
-                            Id = new Guid("b3158a44-03ba-4aee-bbe8-2d5c7ebfb345"),
+                            Id = new Guid("9a0d274e-65e4-4f68-a3cf-5d0edf2599e9"),
                             Name = "Finance"
                         },
                         new
                         {
-                            Id = new Guid("8b8d307f-c78a-4bfe-bb27-f81d7e287189"),
+                            Id = new Guid("4658a028-edad-406d-9225-abe22bd1e29a"),
                             Name = "Accountant"
                         },
                         new
                         {
-                            Id = new Guid("ca35dfef-f729-4b6d-a9dd-ac58ab816fb8"),
+                            Id = new Guid("bbe222ce-0088-4a65-a308-c27d84552c0f"),
                             Name = "HR"
                         });
                 });
@@ -110,9 +111,6 @@ namespace Domain.Migrations
 
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Enable")
-                        .HasColumnType("bit");
 
                     b.HasKey("EmployeeId", "ProjectId");
 
