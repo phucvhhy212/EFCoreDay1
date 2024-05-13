@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Domain.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,7 +62,8 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Enable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,10 +106,10 @@ namespace Domain.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("4658a028-edad-406d-9225-abe22bd1e29a"), "Accountant" },
-                    { new Guid("9a0d274e-65e4-4f68-a3cf-5d0edf2599e9"), "Finance" },
-                    { new Guid("bbe222ce-0088-4a65-a308-c27d84552c0f"), "HR" },
-                    { new Guid("f6d8e996-945c-45b7-b6b8-186ef7b08bbc"), "Software Development" }
+                    { new Guid("0744ea0b-8cec-4a90-b884-98dbb3287080"), "HR" },
+                    { new Guid("18e34018-7896-4aa6-8dc4-f82300aeef9e"), "Software Development" },
+                    { new Guid("51baf2fd-bdd3-47bf-bc86-c1feac6057ea"), "Finance" },
+                    { new Guid("b4fa128b-fe09-41d8-b206-a7c2819a97eb"), "Accountant" }
                 });
 
             migrationBuilder.CreateIndex(

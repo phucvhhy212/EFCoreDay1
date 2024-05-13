@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
-public class DbContext : Microsoft.EntityFrameworkCore.DbContext
+public class ApplicationDbContext : DbContext
 {
     public DbSet<Salary> Salaries { get; set; }
     public DbSet<Employee> Employees { get; set; }
@@ -11,10 +11,13 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Department> Departments { get; set; }
     public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public ApplicationDbContext()
     {
-        optionsBuilder.UseSqlServer(
-            "server=(local);database=NashTech;TrustServerCertificate=true;Integrated Security=true");
+        
+    }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+    {
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
