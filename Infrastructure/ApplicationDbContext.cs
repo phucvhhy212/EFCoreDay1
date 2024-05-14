@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
-public class DbContext : Microsoft.EntityFrameworkCore.DbContext
+public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public DbSet<Salary> Salaries { get; set; }
     public DbSet<Employee> Employees { get; set; }
@@ -11,10 +11,9 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Department> Departments { get; set; }
     public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
     {
-        optionsBuilder.UseSqlServer(
-            "server=(local);database=NashTech;TrustServerCertificate=true;Integrated Security=true");
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,5 +39,18 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
             Id = Guid.NewGuid(),
             Name = "HR"
         });
+        modelBuilder.Entity<Employee>().HasData(new Employee
+        {
+            Id = Guid.NewGuid(),
+            Name = "Huy Phuc"
+        });
+        modelBuilder.Entity<Project>().HasData(new Project
+        {
+            Id = Guid.NewGuid(),
+            Name = "Project 1"
+        });
+        modelBuilder.Entity<Department>().HasQueryFilter(x => x.DeletedAt == null);
+        modelBuilder.Entity<Employee>().HasQueryFilter(x => x.DeletedAt == null);
+        modelBuilder.Entity<Project>().HasQueryFilter(x => x.DeletedAt == null);
     }
 }

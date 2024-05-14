@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Domain.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,8 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,7 +31,8 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,7 +46,8 @@ namespace Domain.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,8 +56,7 @@ namespace Domain.Migrations
                         name: "FK_Employees_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +64,8 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Enable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,8 +89,9 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SalaryAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalaryAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,19 +100,18 @@ namespace Domain.Migrations
                         name: "FK_Salaries_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "DeletedAt", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("4658a028-edad-406d-9225-abe22bd1e29a"), "Accountant" },
-                    { new Guid("9a0d274e-65e4-4f68-a3cf-5d0edf2599e9"), "Finance" },
-                    { new Guid("bbe222ce-0088-4a65-a308-c27d84552c0f"), "HR" },
-                    { new Guid("f6d8e996-945c-45b7-b6b8-186ef7b08bbc"), "Software Development" }
+                    { new Guid("4a70ee61-2816-426f-ba57-7c50120077be"), null, "Finance" },
+                    { new Guid("6f006490-a7bc-4576-a799-b5bea374649f"), null, "Accountant" },
+                    { new Guid("e8ea6d68-658f-4f94-ae8e-c2fcd8a1e54f"), null, "HR" },
+                    { new Guid("ed472459-70a5-4b55-9b30-adbc89506b12"), null, "Software Development" }
                 });
 
             migrationBuilder.CreateIndex(
